@@ -13,8 +13,6 @@ import struct
 import sys
 import zipfile
 
-from . import patches
-
 from .resources import UpdateResources
 from .versioninfo import Version
 from .icons import BuildIcons
@@ -422,12 +420,6 @@ class Runtime(object):
         # The same modules may be in self.ms.modules under different
         # keys; we only need one of them in the archive.
         for mod in set(self.mf.modules.values()):
-            # apply module patch
-            patchname = "patch_%s" % mod.__name__.replace(".", "_")
-            pf = getattr(patches, patchname, None)
-            if pf:
-                pf(mod)
-
             if mod.__code__:
                 path =mod.__dest_file__
                 stream = io.BytesIO()
