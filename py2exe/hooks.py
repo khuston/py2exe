@@ -354,10 +354,10 @@ def hook_matplotlib(finder, module):
     """matplotlib requires data files in a 'mpl-data' subdirectory in
     the same directory as the executable.
     """
-    # c:\Python33\lib\site-packages\matplotlib
-    mpl_data_path = os.path.join(os.path.dirname(module.__loader__.path),
-                                 "mpl-data")
+    import matplotlib
+    mpl_data_path = matplotlib.get_data_path()
     finder.add_datadirectory("mpl-data", mpl_data_path, recursive=True)
+
     finder.excludes.append("wx")
     # XXX matplotlib requires tkinter which modulefinder does not
     # detect because of the six bug.
